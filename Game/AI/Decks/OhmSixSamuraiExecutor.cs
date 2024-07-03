@@ -8,6 +8,17 @@ namespace WindBot.Game.AI.Decks
     [Deck("SixSamurai", "AI_OhmSixSamurai")]
     public class OhmSixSamuraiExecutor : DefaultExecutor
     {
+
+        private readonly List<int> _fourthStarSamurai = new List<int>() {
+            CardId.Kizan,
+            CardId.Kageki,
+            CardId.Irou,
+            CardId.Zanji,
+            CardId.Yaichi,
+            CardId.Mizuho,
+            CardId.Shinai
+        };
+
         #region CONSTRUCTOR
 
         public OhmSixSamuraiExecutor(GameAI ai, Duel duel)
@@ -19,6 +30,9 @@ namespace WindBot.Game.AI.Decks
 
             // Destroy Spell
             AddExecutor(ExecutorType.Activate, CardId.LinkBurst, LinkBurstEffect);
+
+            // Summon ForthStarSamuri
+            AddExecutor(ExecutorType.SummonOrSet, CardId.Kageki, KagekiNormalSummon);
         }
 
         #endregion CONSTRUCTOR
@@ -72,13 +86,44 @@ namespace WindBot.Game.AI.Decks
 
         private bool LinkBurstEffect()
         {
-            return 1 < Bot.GetMonsterCount() && Bot.GetMonstersExtraZoneCount() > 0
-                ? true
-                : false;
+            return 1 < Bot.GetMonsterCount() && Bot.GetMonstersExtraZoneCount() > 0;
         }
 
         #region LOOP_COMBO
 
+        private bool FirstStateCombo()
+        {
+
+            return false;
+        }
+
         #endregion LOOP_COMBO
+
+        #region SUMMON_LOGIC
+
+        private bool KagekiNormalSummon()
+        {
+            if (Bot.HasInHand(_fourthStarSamurai))
+                return true;
+            else if (Enemy.GetMonsters().Count() > 0 
+                     && CompareEnemyAtkToLifePoint())
+                return true;
+            return false;
+        }
+
+        #endregion SUMMON_LOGIC
+
+        #region EXTENSION_METHOD
+
+        /// <summary>
+        /// Compare all ATK of enemy monsters in field
+        /// </summary>
+        /// <returns>true when all attack is more than bot life point,
+        /// otherwise return false</returns>
+        private bool CompareEnemyAtkToLifePoint()
+            => Enemy.GetMonsters().Sum(monster => monster.Attack) >= Bot.LifePoints;
+        
+
+        #endregion EXTENSION_METHOD
     }
 }
