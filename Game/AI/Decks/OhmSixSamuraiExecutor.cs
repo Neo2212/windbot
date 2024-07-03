@@ -24,6 +24,13 @@ namespace WindBot.Game.AI.Decks
         public OhmSixSamuraiExecutor(GameAI ai, Duel duel)
             : base(ai, duel)
         {
+            // Traps Activate
+            AddExecutor(ExecutorType.Activate, CardId.JarOfGreed);
+
+            // Draw Speel Activate
+            AddExecutor(ExecutorType.Activate, CardId.PotOfGreed);
+            AddExecutor(ExecutorType.Activate, CardId.GracefulCharity);
+
             // Six Samurai Spell Search
             AddExecutor(ExecutorType.Activate, CardId.ReinforcementOfTheArmy);
             AddExecutor(ExecutorType.Activate, CardId.ShienSmokeSignal);
@@ -32,7 +39,8 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Activate, CardId.LinkBurst, LinkBurstEffect);
 
             // Summon ForthStarSamuri
-            AddExecutor(ExecutorType.SummonOrSet, CardId.Kageki, KagekiNormalSummon);
+            AddExecutor(ExecutorType.MonsterSet, CardId.Kageki, KagekiSummonSet);
+            AddExecutor(ExecutorType.Summon, CardId.Kageki, KagekiNormalSummon);
         }
 
         #endregion CONSTRUCTOR
@@ -57,7 +65,7 @@ namespace WindBot.Game.AI.Decks
 
             // Spells
             public const int ReinforcementOfTheArmy = 32807846;
-
+            public const int PotOfGreed = 55144522;
             public const int GracefulCharity = 79571449;
             public const int SixSamuraiUnited = 72345736;
             public const int ShienSmokeSignal = 54031490;
@@ -71,7 +79,6 @@ namespace WindBot.Game.AI.Decks
 
             // Traps
             public const int JarOfGreed = 83968380;
-
             public const int JarOfAvarice = 98954106;
 
             // -Extra
@@ -89,24 +96,18 @@ namespace WindBot.Game.AI.Decks
             return 1 < Bot.GetMonsterCount() && Bot.GetMonstersExtraZoneCount() > 0;
         }
 
-        #region LOOP_COMBO
-
-        private bool FirstStateCombo()
-        {
-
-            return false;
-        }
-
-        #endregion LOOP_COMBO
-
         #region SUMMON_LOGIC
 
         private bool KagekiNormalSummon()
         {
             if (Bot.HasInHand(_fourthStarSamurai))
                 return true;
-            else if (Enemy.GetMonsters().Count() > 0 
-                     && CompareEnemyAtkToLifePoint())
+            return false;
+        }
+
+        private bool KagekiSummonSet()
+        {
+            if (Enemy.GetMonsters().Count() > 0 && CompareEnemyAtkToLifePoint())
                 return true;
             return false;
         }
