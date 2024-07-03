@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace WindBot.Game.AI.Decks
@@ -39,8 +37,11 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Activate, CardId.LinkBurst, LinkBurstEffect);
 
             // Summon ForthStarSamuri
-            AddExecutor(ExecutorType.MonsterSet, CardId.Kageki, KagekiSummonSet);
             AddExecutor(ExecutorType.Summon, CardId.Kageki, KagekiNormalSummon);
+            AddExecutor(ExecutorType.MonsterSet, CardId.Kageki, KagekiSummonSet);
+            AddExecutor(ExecutorType.SpSummon, CardId.Kizan);
+            AddExecutor(ExecutorType.SpSummon, CardId.Mizuho);
+            AddExecutor(ExecutorType.SpSummon, CardId.Shinai);
         }
 
         #endregion CONSTRUCTOR
