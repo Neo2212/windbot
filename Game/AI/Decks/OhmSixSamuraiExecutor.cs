@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace WindBot.Game.AI.Decks
 {
     [Deck("SixSamurai", "AI_OhmSixSamurai")]
     public class OhmSixSamuraiExecutor : DefaultExecutor
     {
-
         private readonly List<int> _fourthStarSamurai = new List<int>() {
             CardId.Kizan,
             CardId.Kageki,
@@ -65,6 +65,7 @@ namespace WindBot.Game.AI.Decks
 
             // Spells
             public const int ReinforcementOfTheArmy = 32807846;
+
             public const int PotOfGreed = 55144522;
             public const int GracefulCharity = 79571449;
             public const int SixSamuraiUnited = 72345736;
@@ -79,6 +80,7 @@ namespace WindBot.Game.AI.Decks
 
             // Traps
             public const int JarOfGreed = 83968380;
+
             public const int JarOfAvarice = 98954106;
 
             // -Extra
@@ -123,7 +125,33 @@ namespace WindBot.Game.AI.Decks
         /// otherwise return false</returns>
         private bool CompareEnemyAtkToLifePoint()
             => Enemy.GetMonsters().Sum(monster => monster.Attack) >= Bot.LifePoints;
-        
+
+        /// <summary>
+        /// Check the monster that contain "Six Samurai" name
+        /// </summary>
+        /// <param name="name">monster name</param>
+        /// <returns>true when match the "Six Samurai" name,
+        /// otherwise return false</returns>
+        private bool IsMatchSixSamuraiName(string name)
+            => Regex.IsMatch(name, @"(Six Samurai)", RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Check the monster that contain "Six Samurai" name
+        /// </summary>
+        /// <param name="name">monster name</param>
+        /// <returns>true when match the "Shien" name,
+        /// otherwise return false</returns>
+        private bool IsMatchShienName(string name)
+            => Regex.IsMatch(name, @"(Shien)", RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Check the monster that contain "Six Samurai" name
+        /// </summary>
+        /// <param name="name">monster name</param>
+        /// <returns>true when match the "Six Samurai" or "Shien",
+        /// otherwise return false</returns>
+        private bool IsMatchBothSamuraiAndShien(string name)
+            => Regex.IsMatch(name, @"(Six Samurai|Shien)", RegexOptions.IgnoreCase);
 
         #endregion EXTENSION_METHOD
     }
