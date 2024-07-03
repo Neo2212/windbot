@@ -8,17 +8,28 @@ namespace WindBot.Game.AI.Decks
     [Deck("SixSamurai", "AI_OhmSixSamurai")]
     public class OhmSixSamuraiExecutor : DefaultExecutor
     {
-        public OhmSixSamuraiExecutor(GameAI ai, Duel duel) 
+        #region CONSTRUCTOR
+
+        public OhmSixSamuraiExecutor(GameAI ai, Duel duel)
             : base(ai, duel)
         {
             // Six Samurai Spell Search
             AddExecutor(ExecutorType.Activate, CardId.ReinforcementOfTheArmy);
             AddExecutor(ExecutorType.Activate, CardId.ShienSmokeSignal);
+
+            // Destroy Spell
+            AddExecutor(ExecutorType.Activate, CardId.LinkBurst, LinkBurstEffect);
         }
+
+        #endregion CONSTRUCTOR
+
+        #region CARD_MAPPING
+
         public class CardId
         {
             // Monsters
             public const int GreatShogunShien = 63176202;
+
             public const int EnishiShienChancellor = 38280762;
             public const int GrandmasterOfTheSixSamurai = 83039729;
             public const int Kizan = 49721904;
@@ -32,6 +43,7 @@ namespace WindBot.Game.AI.Decks
 
             // Spells
             public const int ReinforcementOfTheArmy = 32807846;
+
             public const int GracefulCharity = 79571449;
             public const int SixSamuraiUnited = 72345736;
             public const int ShienSmokeSignal = 54031490;
@@ -45,13 +57,28 @@ namespace WindBot.Game.AI.Decks
 
             // Traps
             public const int JarOfGreed = 83968380;
+
             public const int JarOfAvarice = 98954106;
 
             // -Extra
             public const int Rihab = 33964637;  // Fusion
+
             public const int ShiEn = 29981921; // Synchro
             public const int Shien = 1828513; // Exceed
             public const int GreatGeneral = 74752631; // Link
         }
+
+        #endregion CARD_MAPPING
+
+        private bool LinkBurstEffect()
+        {
+            return 1 < Bot.GetMonsterCount() && Bot.GetMonstersExtraZoneCount() > 0
+                ? true
+                : false;
+        }
+
+        #region LOOP_COMBO
+
+        #endregion LOOP_COMBO
     }
 }
