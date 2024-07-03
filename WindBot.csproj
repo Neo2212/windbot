@@ -175,6 +175,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Decks\AI_NeoCyberDragon.ydk" />
+    <None Include="Decks\AI_OhmSixSamurai.ydk" />
     <None Include="sqlite3.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
