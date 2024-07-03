@@ -11,7 +11,9 @@ namespace WindBot.Game.AI.Decks
         public OhmSixSamuraiExecutor(GameAI ai, Duel duel) 
             : base(ai, duel)
         {
-
+            // Six Samurai Spell Search
+            AddExecutor(ExecutorType.Activate, CardId.ReinforcementOfTheArmy);
+            AddExecutor(ExecutorType.Activate, CardId.ShienSmokeSignal);
         }
         public class CardId
         {
