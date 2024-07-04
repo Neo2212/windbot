@@ -10,6 +10,7 @@ namespace WindBot.Game.AI.Decks
         private const int _oneStar = 1;
         private const int _fourStar = 4;
         private const int _fiveStar = 5;
+        private int _bushidoCounter = default;
 
         private readonly List<int> _fourthStarSamurai = new List<int>() {
             CardId.Kizan,
@@ -39,6 +40,11 @@ namespace WindBot.Game.AI.Decks
 
             // Destroy Spell
             AddExecutor(ExecutorType.Activate, CardId.LinkBurst, LinkBurstEffect);
+
+            // Core Spell
+            AddExecutor(ExecutorType.Activate, CardId.TempleOfTheSix);
+            AddExecutor(ExecutorType.Activate, CardId.ShienDojo);
+            AddExecutor(ExecutorType.Activate, CardId.GatewayOfTheSix);
 
             // Summon ForthStarSamuri
             AddExecutor(ExecutorType.Summon, CardId.Kageki, KagekiNormalSummon);
