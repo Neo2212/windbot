@@ -104,11 +104,6 @@ namespace WindBot.Game.AI.Decks
 
         #endregion CARD_MAPPING
 
-        private bool LinkBurstEffect()
-        {
-            return 1 < Bot.GetMonsterCount() && Bot.GetMonstersExtraZoneCount() > 0;
-        }
-
         #region SUMMON_LOGIC
 
         private bool KagekiNormalSummon()
@@ -148,6 +143,15 @@ namespace WindBot.Game.AI.Decks
         }
 
         #endregion EXTRA_MONSTER_SUMMON_LOGIC
+
+        #region DESTROY_ENEMY_CARD_LOGIC
+
+        private bool LinkBurstEffect()
+        {
+            return 1 < Bot.GetMonsterCount() && Bot.GetMonstersExtraZoneCount() > 0;
+        }
+
+        #endregion DESTROY_ENEMY_CARD_LOGIC
 
         #region EXTENSION_METHOD
 
