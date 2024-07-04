@@ -7,6 +7,10 @@ namespace WindBot.Game.AI.Decks
     [Deck("SixSamurai", "AI_OhmSixSamurai")]
     public class OhmSixSamuraiExecutor : DefaultExecutor
     {
+        private const int _oneStar = 1;
+        private const int _fourStar = 4;
+        private const int _fiveStar = 5;
+
         private readonly List<int> _fourthStarSamurai = new List<int>() {
             CardId.Kizan,
             CardId.Kageki,
@@ -116,6 +120,28 @@ namespace WindBot.Game.AI.Decks
         }
 
         #endregion SUMMON_LOGIC
+
+        #region EXTRA_MONSTER_SUMMON_LOGIC
+
+        public override IList<ClientCard> OnSelectSynchroMaterial(IList<ClientCard> cards, int sum, int min, int max)
+        {
+            Logger.DebugWriteLine("OnSelectSynchroMaterial " + cards.Count + " " + sum + " " + min + " " + max);
+            if (sum != _fiveStar)
+                return null;
+
+            if (Bot.MonsterZone.Any(monster => monster.Level.Equals(_oneStar))
+                && Bot.MonsterZone.Any(monster => monster.Level.Equals(_fourStar))
+                && Bot.HasInExtra(CardId.GreatGeneral))
+            {
+                return Bot.MonsterZone
+                        .Where(monster => monster.Level == _fourStar || monster.Level == _oneStar)
+                        .ToList();
+            };
+
+            return null;
+        }
+
+        #endregion EXTRA_MONSTER_SUMMON_LOGIC
 
         #region EXTENSION_METHOD
 
