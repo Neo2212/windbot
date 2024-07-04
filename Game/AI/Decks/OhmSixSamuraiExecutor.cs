@@ -35,16 +35,16 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Activate, CardId.GracefulCharity);
 
             // Six Samurai Spell Search
-            AddExecutor(ExecutorType.Activate, CardId.ReinforcementOfTheArmy);
-            AddExecutor(ExecutorType.Activate, CardId.ShienSmokeSignal);
+            AddExecutor(ExecutorType.Activate, CardId.ReinforcementOfTheArmy, ReinforcementOfTheArmyEffect);
+            AddExecutor(ExecutorType.Activate, CardId.ShienSmokeSignal, ShienSmokeSignalEffect);
 
             // Destroy Spell
             AddExecutor(ExecutorType.Activate, CardId.LinkBurst, LinkBurstEffect);
 
             // Core Spell
-            AddExecutor(ExecutorType.Activate, CardId.TempleOfTheSix);
-            AddExecutor(ExecutorType.Activate, CardId.ShienDojo);
-            AddExecutor(ExecutorType.Activate, CardId.GatewayOfTheSix);
+            AddExecutor(ExecutorType.Activate, CardId.TempleOfTheSix, TempleOfTheSixEffect);
+            AddExecutor(ExecutorType.Activate, CardId.ShienDojo, ShienDojoEffect);
+            AddExecutor(ExecutorType.Activate, CardId.GatewayOfTheSix, GatewayOfTheSixEffect);
 
             // Summon ForthStarSamuri
             AddExecutor(ExecutorType.Summon, CardId.Kageki, KagekiNormalSummon);
@@ -103,6 +103,36 @@ namespace WindBot.Game.AI.Decks
         }
 
         #endregion CARD_MAPPING
+
+        #region CORE_SPELL
+
+        private bool GatewayOfTheSixEffect()
+        {
+            return false;
+        }
+
+        private bool ShienDojoEffect()
+        {
+            return false;
+        }
+
+        private bool TempleOfTheSixEffect()
+        {
+            return false;
+        }
+
+        private bool ReinforcementOfTheArmyEffect()
+        {
+            return false;
+        }
+
+        private bool ShienSmokeSignalEffect()
+        {
+            return false;
+        }
+
+        #endregion CORE_SPELL
+
 
         #region SUMMON_LOGIC
 
