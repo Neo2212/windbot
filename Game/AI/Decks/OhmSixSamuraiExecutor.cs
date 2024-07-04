@@ -141,6 +141,14 @@ namespace WindBot.Game.AI.Decks
 
         private bool ShienSmokeSignalEffect()
         {
+            if (!Bot.HasInHand(CardId.Kageki))
+            {
+                AI.SelectCard(CardId.Kageki,
+                              CardId.Shinai,
+                              CardId.Mizuho,
+                              CardId.Yaichi);
+                return true;
+            }
             return false;
         }
 
