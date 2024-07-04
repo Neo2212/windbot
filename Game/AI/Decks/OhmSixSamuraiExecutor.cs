@@ -123,6 +123,19 @@ namespace WindBot.Game.AI.Decks
 
         private bool ReinforcementOfTheArmyEffect()
         {
+            if (!Bot.HasInHand(CardId.ShienSmokeSignal))
+            {
+                if (!Bot.HasInHand(CardId.Kageki))
+                    AI.SelectCard(CardId.Kageki);
+                AI.SelectCard(CardId.Kizan,
+                              CardId.Mizuho,
+                              CardId.Shinai,
+                              CardId.Squire,
+                              CardId.Yaichi,
+                              CardId.Irou,
+                              CardId.Zanji);
+                return true;
+            }
             return false;
         }
 
