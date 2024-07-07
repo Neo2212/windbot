@@ -22,6 +22,11 @@ namespace WindBot.Game.AI.Decks
             CardId.Shinai
         };
 
+        private readonly List<int> _searchSpell = new List<int>() {
+            CardId.ReinforcementOfTheArmy,
+            CardId.ShienSmokeSignal
+        };
+
         #region CONSTRUCTOR
 
         public OhmSixSamuraiExecutor(GameAI ai, Duel duel)
@@ -49,6 +54,9 @@ namespace WindBot.Game.AI.Decks
             // Summon ForthStarSamuri
             AddExecutor(ExecutorType.Summon, CardId.Kageki, KagekiNormalSummon);
             AddExecutor(ExecutorType.MonsterSet, CardId.Kageki, KagekiSummonSet);
+            AddExecutor(ExecutorType.SummonOrSet, CardId.Kizan, HasKagekiInHand);
+            AddExecutor(ExecutorType.SummonOrSet, CardId.Mizuho, HasKagekiInHand);
+            AddExecutor(ExecutorType.SummonOrSet, CardId.Shinai, HasKagekiInHand);
             AddExecutor(ExecutorType.SpSummon, CardId.Kizan);
             AddExecutor(ExecutorType.SpSummon, CardId.Mizuho);
             AddExecutor(ExecutorType.SpSummon, CardId.Shinai);
@@ -156,6 +164,13 @@ namespace WindBot.Game.AI.Decks
 
 
         #region SUMMON_LOGIC
+        private bool HasKagekiInHand()
+        {
+            if (Bot.HasInHand(CardId.Kageki) 
+                || Bot.HasInHand(_searchSpell))
+                return false;
+            return true;
+        }
 
         private bool KagekiNormalSummon()
         {
