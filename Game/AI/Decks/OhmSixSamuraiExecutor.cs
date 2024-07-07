@@ -123,14 +123,17 @@ namespace WindBot.Game.AI.Decks
 
         private bool ShienDojoEffect()
         {
-            if(Bot.Graveyard.Where(card => card.Id.Equals(CardId.Kageki)).Count() < 3
-               && 3 <= _shienDojoCounter )
+            if(Bot.HasInSpellZone(CardId.GatewayOfTheSix))
             {
-                AI.SelectCard(CardId.Kageki);
-                CheckSpellCardOnField();
-                _shienDojoCounter = 0;
-                return true;
+                if (_shienDojoCounter <= 4)
+                    return true;
+                else if (4 < _shienDojoCounter && _shienDojoCounter <= 6)
+                    return true;
+                else
+                    return false;
             }
+            if (_shienDojoCounter <= 4 && CompareEnemyAtkToLifePoint())
+                return true;
             return false;
         }
 
