@@ -48,8 +48,12 @@ namespace WindBot.Game.AI.Decks
             // Destroy Spell
             AddExecutor(ExecutorType.Activate, CardId.LinkBurst, LinkBurstEffect);
 
+            // Equipment card
+            AddExecutor(ExecutorType.Activate, CardId.AsceticismOfTheSixSamurai);
+
             // Core Spell
-            AddExecutor(ExecutorType.Activate, CardId.TempleOfTheSix, TempleOfTheSixEffect);
+            AddExecutor(ExecutorType.Activate, CardId.SixSamuraiUnited, SixSamuraiUnitedEffect);
+            AddExecutor(ExecutorType.Activate, CardId.TempleOfTheSix);
             AddExecutor(ExecutorType.Activate, CardId.ShienDojo, ShienDojoEffect);
             AddExecutor(ExecutorType.Activate, CardId.GatewayOfTheSix, GatewayOfTheSixEffect);
 
@@ -123,22 +127,44 @@ namespace WindBot.Game.AI.Decks
 
         private bool ShienDojoEffect()
         {
-            if(Bot.HasInSpellZone(CardId.GatewayOfTheSix))
+            if (Bot.HasInSpellZone(CardId.GatewayOfTheSix))
             {
                 if (_shienDojoCounter <= 4)
+                {
+                    CheckSpellCardOnField();
+                    _shienDojoCounter = 0;
                     return true;
+                }
                 else if (4 < _shienDojoCounter && _shienDojoCounter <= 6)
+                {
+                    CheckSpellCardOnField();
+                    _shienDojoCounter = 0;
                     return true;
+                }
                 else
                     return false;
             }
             if (_shienDojoCounter <= 4 && CompareEnemyAtkToLifePoint())
+            {
+                CheckSpellCardOnField();
+                _shienDojoCounter = 0;
                 return true;
+            }
             return false;
         }
 
-        private bool TempleOfTheSixEffect()
+        private bool SixSamuraiUnitedEffect()
         {
+            if (Bot.HasInSpellZone(CardId.GatewayOfTheSix))
+            {
+                return false;
+            }
+            if (_sixSamuraiUnitedCounter <= 2 && CompareEnemyAtkToLifePoint())
+            {
+                CheckSpellCardOnField();
+                _sixSamuraiUnitedCounter = 0;
+                return true;
+            }
             return false;
         }
 
