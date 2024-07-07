@@ -123,6 +123,14 @@ namespace WindBot.Game.AI.Decks
 
         private bool ShienDojoEffect()
         {
+            if(Bot.Graveyard.Where(card => card.Id.Equals(CardId.Kageki)).Count() < 3
+               && 3 <= _shienDojoCounter )
+            {
+                AI.SelectCard(CardId.Kageki);
+                CheckSpellCardOnField();
+                _shienDojoCounter = 0;
+                return true;
+            }
             return false;
         }
 
@@ -176,6 +184,10 @@ namespace WindBot.Game.AI.Decks
                 _sixSamuraiUnitedCounter += Bot.SpellZone
                                     .Where(card => card.Id.Equals(CardId.SixSamuraiUnited))
                                     .Count();
+            Logger.DebugWriteLine($"AI Counter: \n" +
+                                  $"Bushido Counter: {_bushidoCounter}\n" +
+                                  $"ShienDojo Counter: {_shienDojoCounter}\n" +
+                                  $"Six Samurai United Counter: {_sixSamuraiUnitedCounter}");
         }
 
         #endregion CORE_SPELL
