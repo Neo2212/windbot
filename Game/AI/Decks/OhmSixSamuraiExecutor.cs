@@ -11,6 +11,8 @@ namespace WindBot.Game.AI.Decks
         private const int _fourStar = 4;
         private const int _fiveStar = 5;
         private int _bushidoCounter = default;
+        private int _shienDojoCounter = default;
+        private int _sixSamuraiUnitedCounter = default;
 
         private readonly List<int> _fourthStarSamurai = new List<int>() {
             CardId.Kizan,
@@ -160,29 +162,55 @@ namespace WindBot.Game.AI.Decks
             return false;
         }
 
+        private void CheckSpellCardOnField()
+        {
+            if (Bot.HasInSpellZone(CardId.ShienDojo))
+                _shienDojoCounter += Bot.SpellZone
+                                    .Where(card => card.Id.Equals(CardId.ShienDojo))
+                                    .Count();
+            if (Bot.HasInSpellZone(CardId.GatewayOfTheSix))
+                _bushidoCounter += Bot.SpellZone
+                                    .Where(card => card.Id.Equals(CardId.GatewayOfTheSix))
+                                    .Count();
+            if (Bot.HasInSpellZone(CardId.SixSamuraiUnited))
+                _sixSamuraiUnitedCounter += Bot.SpellZone
+                                    .Where(card => card.Id.Equals(CardId.SixSamuraiUnited))
+                                    .Count();
+        }
+
         #endregion CORE_SPELL
 
 
         #region SUMMON_LOGIC
         private bool HasKagekiInHand()
         {
-            if (Bot.HasInHand(CardId.Kageki) 
-                || Bot.HasInHand(_searchSpell))
-                return false;
-            return true;
+            if (!Bot.HasInHand(CardId.Kageki)
+                || !Bot.HasInHand(_searchSpell)
+                || CompareEnemyAtkToLifePoint())
+            {
+                CheckSpellCardOnField();
+                return true;
+            }
+            return false;
         }
 
         private bool KagekiNormalSummon()
         {
             if (Bot.HasInHand(_fourthStarSamurai))
+            {
+                CheckSpellCardOnField();
                 return true;
+            }
             return false;
         }
 
         private bool KagekiSummonSet()
         {
             if (Enemy.GetMonsters().Count() > 0 && CompareEnemyAtkToLifePoint())
+            {
+                CheckSpellCardOnField();
                 return true;
+            }
             return false;
         }
 
