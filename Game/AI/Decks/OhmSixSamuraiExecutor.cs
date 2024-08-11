@@ -122,6 +122,11 @@ namespace WindBot.Game.AI.Decks
 
         private bool GatewayOfTheSixEffect()
         {
+            if (_bushidoCounter + _shienDojoCounter + _sixSamuraiUnitedCounter< 4)
+            {
+
+                return true;
+            }
             return false;
         }
 
